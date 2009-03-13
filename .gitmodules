@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/rails_vip"]
+	path = vendor/plugins/rails_vip
+	url = git@github.com:neworganizing/rails_vip.git
