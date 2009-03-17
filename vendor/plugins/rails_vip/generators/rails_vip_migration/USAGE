@@ -1,0 +1,8 @@
+Description:
+	Creates a migration that adds all the necessary tables for VIP models
+
+Example:
+	./script/generate rails_vip_migration
+
+	This will create
+		db/migrate/TIMESTAMP_rails_vip_plugin
