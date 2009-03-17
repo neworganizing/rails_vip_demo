@@ -91,9 +91,11 @@
 <% end %>
 </table>
 </div>
+<% if @map %>
 <%=  GMap.header %>
 <%=  @map.to_html %>
 <%= @map.div(:width => 493, :height => 300) %>
+<% end %>
 <% end %>
 
 <div style="clear:both">
