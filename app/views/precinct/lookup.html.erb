@@ -32,11 +32,11 @@
 <% if !@precinct.nil? then %>
 	<tr>
 		<td><b>Locality:</b></td>
-		<td> <%= @precinct.locality.name %><br/>
+		<td> <%= link_to @precinct.locality.name, @precinct.locality %><br/>
 		</td>
 	</tr>
 	<tr class="maptable"><td><b>Precinct: </b></td>
-		<td> Name: <%= @precinct.name %><br/>
+		<td> Name: <%= link_to @precinct.name, @precinct %><br/>
 		<%= @precinct.ward.nil? ? '' : 'Ward: ' + @precinct.ward + '<br/>' %>
 		File ID: <%= @precinct.file_internal_id%><br/>
 		ID: <%= @precinct.id %><br/>
@@ -57,7 +57,7 @@
 <% end %>
 	<% if !@polling_location.nil? then %>
 	<tr>
-		<td><b>Polling Location: </b></td>
+		<td><b><%= link_to "Polling Location", @polling_location %>: </b></td>
 		<td>
 			<%= @polling_location.name.nil?          ? '' : @polling_location.name + '<br/>'%>
 			<%= @polling_location.address.nil?       ? '' : @polling_location.address + '<br/>'%>
@@ -92,7 +92,7 @@
 </table>
 </div>
 <% if @map %>
-<%=  GMap.header %>
+<%=  @map.header %>
 <%=  @map.to_html %>
 <%= @map.div(:width => 493, :height => 300) %>
 <% end %>
@@ -109,11 +109,19 @@ Annandale<br/>
 OH
 </td>
 <td>
-(from real KS file)<br/>
-2507<br/>
-12th<br/>
-Kansas City<br/>
-KS<br/>
-</td></tr>
+(from real IA file)<br/>
+7<br/>
+Bell<br/>
+Des Moines<br/>
+IA<br/>
+</td>
+<td>
+(real MN file)<br/>
+32005<br/>
+Loon<br/>
+Vergas<br/>
+MN<br/>
+</td>
+</tr>
 </table>
 </div>

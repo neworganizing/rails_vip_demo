@@ -125,7 +125,6 @@ class PrecinctController < ApplicationController
 			#still just a string, but at least it looks good 
 			@ss = StreetSegment.new.find_by_address(data)
 			if (!@ss.nil?) then
-				#puts "got ss"
 				@split    = @ss.precinct_split
 				@precinct = @split.nil? ? @ss.precinct : @split.precinct 
 				@contests = @split.nil? ? @precinct.contests : @split.contests
@@ -217,7 +216,9 @@ class PrecinctController < ApplicationController
 										
 						@map.overlay_init(GPolyline.new([GLatLng.new([loc_start.latitude, loc_start.longitude]),
 						                                 GLatLng.new([loc_end.latitude,   loc_end.longitude])]))
+						puts "overlay ok"
 					rescue
+						puts "overlay fail"
 						#couldn't find one of the addresses
 					end	
 		

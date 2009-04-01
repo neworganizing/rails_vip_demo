@@ -11,7 +11,7 @@
 </table>
 
 <% if @map %>
-<%=  GMap.header %>
+<%=  @map.header %>
 <%=  @map.to_html %>
 <%= @map.div(:width => 493, :height => 300) %>
 <div id="map-div">

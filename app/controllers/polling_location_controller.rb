@@ -48,13 +48,13 @@ class PollingLocationController < ApplicationController
 #				:info_window_anchor => GPoint.new(9,2)),
 				"icon_poll")
 			icon_poll = Variable.new("icon_poll")
+			@map.control_init(:large_map => true, :map_type => true)
+			@map.center_zoom_init(@polling_loc_std.coordinates,15)
 			@map.overlay_init(GMarker.new(@polling_loc_std.coordinates,
 			                    :title => @polling_location.name,
 			                    :info_window => @polling_location.name, 
 			                    :icon => icon_poll
 				    ))
-			@map.control_init(:large_map => true, :map_type => true)
-			@map.center_zoom_init(@polling_loc_std.coordinates,15)
 		end
 	end
 
