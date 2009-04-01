@@ -216,9 +216,7 @@ class PrecinctController < ApplicationController
 										
 						@map.overlay_init(GPolyline.new([GLatLng.new([loc_start.latitude, loc_start.longitude]),
 						                                 GLatLng.new([loc_end.latitude,   loc_end.longitude])]))
-						puts "overlay ok"
 					rescue
-						puts "overlay fail"
 						#couldn't find one of the addresses
 					end	
 		
