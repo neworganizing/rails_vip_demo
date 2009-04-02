@@ -1,10 +1,3 @@
-<% if @locality %>
-<%= link_to(@locality.source.name, @locality.source) %> &gt;&gt; 
-<%= @locality.state.name %> &gt;&gt; 
-<%= link_to(@locality.name, @locality) %> &gt;&gt; Precincts
-<% elsif @source %>
-<%= link_to(@source.name, @source) %>
-<% end %>
 <table>
 <tr><th>locality</th><th>name</th></tr>
 <% @precincts.each do |p| -%>
