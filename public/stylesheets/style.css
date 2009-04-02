@@ -39,4 +39,5 @@ div#lookup_form {
 body {
   font-family: 'arial', 'helvetica';
   background-color: #a6c743;
+  overflow-y: scroll;
 }
