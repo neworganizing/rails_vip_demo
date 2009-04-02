@@ -60,6 +60,10 @@ class PrecinctController < ApplicationController
 	def show
 		@precinct = Precinct.find(params[:id])
 		@polling_locations = @precinct.polling_locations
+		add_crumb "Source", @precinct.source
+		add_crumb "State", @precinct.locality.state
+		add_crumb "Locality", @precinct.locality
+		add_crumb "Precinct"
 	end
 
 	def lookup
@@ -249,14 +253,23 @@ class PrecinctController < ApplicationController
 		if (params["source"])
 			@source = Source.find(params["source"])
 			@precincts = @source.precincts
+			add_crumb "Source", @source
+			add_crumb "Precincts"
 		elsif (params["locality"])
 			@locality = Locality.find(params["locality"])
 			@precincts = @locality.precincts
+			add_crumb "Source", @locality.source
+			add_crumb "State", @locality.state
+			add_crumb "Locality", @locality
+			add_crumb "Precincts"
 		elsif (params["ballot_drop_location"])
 			@ballot_drop_location = BallotDropLocation.find(params["ballot_drop_location"])
 			@precincts = @ballot_drop_location.precincts
+			add_crumb "Source", @ballot_drop_location.source
+			add_crumb "Ballot Drop Location", @ballot_drop_location
 		else
 			@precincts = Precinct.find(:all)
+			add_crumb "Precincts"
 		end
 	end
 end

@@ -8,4 +8,7 @@ class ApplicationController < ActionController::Base
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '510d16336e5d451370d32abec555d116'
+
+  add_crumb "Home", '/source'
+
 end

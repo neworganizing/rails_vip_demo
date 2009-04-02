@@ -12,14 +12,20 @@ class TabulationAreaController < ApplicationController
 			@contests = @contests + @parents.map{|t| t.contests}
 			@contests.flatten!
 		end
+		add_crumb "Source", @tabulation_area.source
+		add_crumb "State", @tabulation_area.state
+		add_crumb "Tabulation Area"
 	end
 
 	def index
 		if (params["source"])
 			source = Source.find(params["source"])
-			@localities = source.localities
+			@tabulation_areas = source.tabulation_areas
+			add_crumb "Source", source
+			add_crumb "Tabulation Areas"
 		else
-			@localities = Locality.find(:all)
+			@tabulation_areas = TabulationArea.find(:all)
+			add_crumb "Tabulation Areas"
 		end
 	end
 end

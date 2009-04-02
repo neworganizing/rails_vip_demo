@@ -27,7 +27,6 @@ class PollingLocationController < ApplicationController
 		address_versions.each do |addr|
 			if @polling_loc_std.nil? then
 				begin
-					# puts addr
 					@polling_loc_std = gg.locate addr
 				rescue
 					@polling_loc_std = nil
@@ -36,7 +35,6 @@ class PollingLocationController < ApplicationController
 		end #each address
 
 		if (!@polling_loc_std.nil?) then
-			puts "got polling_loc_std"
 			
 			pollurl = 'http://www.martintod.org.uk/blog/LDballotBox.png'
 			@map = GMap.new('map_div')
@@ -56,20 +54,37 @@ class PollingLocationController < ApplicationController
 			                    :icon => icon_poll
 				    ))
 		end
+		add_crumb "Source", @polling_location.source
+		add_crumb "State", @polling_location.precincts.first.locality.state
+		add_crumb "Locality", @polling_location.precincts.first.locality
+		#TODO: add precinct crumb if possible
+		add_crumb "Polling Location"
 	end
 
 	def index
 		if (params["source"])
 			@source = Source.find(params["source"])
 			@polling_locations = @source.polling_locations
+			add_crumb "Source", @source
+			add_crumb "Polling Locations"
 		elsif (params["locality"])
 			@locality = Locality.find(params["locality"])
 			@polling_locations = @locality.precincts.map(&:polling_locations)
+			add_crumb "Source", @locality.source
+			add_crumb "State", @locality.state
+			add_crumb "Locality", @locality
+			add_crumb "Polling Locations"
 		elsif (params["precinct"])
 			@precinct = Locality.find(params["precinct"])
 			@polling_locations = @precinct.polling_locations
+			add_crumb "Source", @precinct.source
+			add_crumb "State", @precinct.locality.state
+			add_crumb "Locality", @precinct.locality
+			add_crumb "Precinct", @precinct
+			add_crumb "Polling Locations"
 		else
 			@polling_locations = PollingLocation.find(:all)
+			add_crumb "Polling Locations"
 		end
 	end
 end

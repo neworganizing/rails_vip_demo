@@ -3,6 +3,7 @@
 <tr><td><b>election administration</b></td><td><%= @state.election_administration.nil? ? '(none)' : link_to(@state.election_administration.name ? @state.election_administration.name : "Election Administration", @state.election_administration) %></td></tr>
 </table>
 <table>
+<b>Localities</b>
 <% @state.localities.each do |l| %>
 	<tr><td><%= link_to l.name, l %></td></tr>
 <% end %>
