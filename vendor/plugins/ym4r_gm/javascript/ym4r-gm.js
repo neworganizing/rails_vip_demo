@@ -54,6 +54,20 @@ function addGeocodingToMarker(marker,address){
 }
 
 
+function addAddressesToPolyline(polyline,points){
+    polyline.orig_initialize = polyline.initialize;
+    orig_redraw = polyline.redraw;
+    polyline.redraw = function(force){}; //empty the redraw method so no error when called by addOverlay.
+    polyline.initialize = function(map){
+        for (address in points) {
+  	  new GClientGeocoder().getLatLng(address,
+	  				  function(latlng){
+	      if(latlng){
+	polyline.redraw = orig_redraw;
+	polyline.orig_initialize(map); //init before setting point
+    };
+    return polyline;
+}
 
 GMap2.prototype.centerAndZoomOnMarkers = function(markers) {
      var bounds = new GLatLngBounds(markers[0].getPoint(),

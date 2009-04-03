@@ -54,6 +54,17 @@ function addGeocodingToMarker(marker,address){
 }
 
 
+function addAddressesToPolyline(polyline,points){
+    for (address in points) {
+  	  new GClientGeocoder().getLatLng(address,
+	  				  function(latlng){
+	      if(latlng) {
+                  polyline.insertVertex(latlng);
+   	          polyline.redraw(true);
+              }
+            })
+    }
+}
 
 GMap2.prototype.centerAndZoomOnMarkers = function(markers) {
      var bounds = new GLatLngBounds(markers[0].getPoint(),

@@ -194,6 +194,8 @@ class PrecinctController < ApplicationController
 
 
 				#plot the street segment
+				@map.record_init("var gc = new GClientGeocoder()")
+				google_timeout = 0
 				@precinct.street_segments.each do |seg|
 					begin
 						s_start = seg.start_street_address
@@ -212,17 +214,47 @@ class PrecinctController < ApplicationController
 						                 (s_end.street_suffix.nil? ? '' : s_end.street_suffix) + ' ' +
 						                 (s_end.address_direction.nil? ? '' : s_end.address_direction) + ', ' + 
 						                 s_end.city + ', ' + 
-						                 data[:state] + ' ' 
+						                 data[:state] + ' ' +
 						                 (s_end.zip.nil? ? '' : s_end.zip)
 						                 
+=begin
 						loc_start = gg.locate seg_addr_start
 						loc_end   = gg.locate seg_addr_end
 		
 										
 						@map.overlay_init(GPolyline.new([GLatLng.new([loc_start.latitude, loc_start.longitude]),
 						                                 GLatLng.new([loc_end.latitude,   loc_end.longitude])]))
-						# client-side geocoding
-#						@map.overlay_init(GPolyline.new([seg_addr_start, seg_addr_end]))
+=end
+						#client-side geocoding
+
+						line = GPolyline.new()
+						@map.record_init("#{line.name} = #{MappingObject.javascriptify_variable(line)};")
+						@map.record_init("map.addOverlay(#{line.name});")
+						for address in [seg_addr_start,seg_addr_end] do
+							@map.record_init("setTimeout('new GClientGeocoder().getLatLng(#{MappingObject.javascriptify_variable(address)}, function(latlng){ if (latlng) { #{line.name}.insertVertex(0,latlng); #{line.name}.redraw;}})',#{google_timeout*250})")
+							google_timeout = google_timeout + 1;
+						end
+=begin
+							@map.record_init("
+gc.getLatLng(#{MappingObject.javascriptify_variable(seg_addr_start)}, 
+                                function(latlng){ 
+                                  if (latlng) { 
+                                    #{line.name}.insertVertex(0,latlng);
+                                    gc.getLatLng(
+                                      #{MappingObject.javascriptify_variable(seg_addr_end)}, 
+                                      function(latlng2) { 
+                                        if (latlng2) { 
+                                          #{line.name}.insertVertex(0,latlng2); 
+                                          #{line.name}.redraw;
+                                        } //if
+                                      } //function
+                                    ); //getlatlng
+                                    #{line.name}.redraw;
+                                  } //if
+                                } ); ")
+=end
+
+#						@map.record_init("addAddressesToPolyline(#{line.name}, #{MappingObject.javascriptify_variable([seg_addr_start, seg_addr_end])})")
 					rescue
 						#couldn't find one of the addresses
 					end	
@@ -232,8 +264,10 @@ class PrecinctController < ApplicationController
 				if (!@polling_loc_std.nil?) then
 					#find bounding box to include polling 
 					#and home addresses
-					sw = GLatLng.new([[@polling_loc_std.latitude, @loc.latitude].max,[@polling_loc_std.longitude, @loc.longitude].min])
-					ne = GLatLng.new([[@polling_loc_std.latitude, @loc.latitude].min,[@polling_loc_std.longitude, @loc.longitude].max])
+					sw = GLatLng.new([[@polling_loc_std.latitude, @loc.latitude].max,
+					                  [@polling_loc_std.longitude, @loc.longitude].min])
+					ne = GLatLng.new([[@polling_loc_std.latitude, @loc.latitude].min,
+					                  [@polling_loc_std.longitude, @loc.longitude].max])
 					@map.center_zoom_on_bounds_init(GLatLngBounds.new(sw,ne))
 					
 					@map.overlay_init(GMarker.new(@polling_loc_std.coordinates,

@@ -82,10 +82,10 @@ module Ym4r
     #A polyline.
     class GPolyline
       include MappingObject
-      attr_accessor :points,:color,:weight,:opacity
+      attr_accessor :points,:color,:weight,:opacity,:name
       #Can take an array of +GLatLng+ or an array of 2D arrays. A method to directly build a polyline from a GeoRuby linestring is provided in the helper.rb file.
-      def initialize(points,color = nil,weight = nil,opacity = nil)
-        if !points.empty? and points[0].is_a?(Array)
+      def initialize(points = nil,color = nil,weight = nil,opacity = nil)
+        if points and !points.empty? and points[0].is_a?(Array)
           @points = points.collect { |pt| GLatLng.new(pt) }
         else
           @points = points
@@ -93,14 +93,28 @@ module Ym4r
         @color = color
         @weight = weight
         @opacity = opacity
+        name_length = 8
+        chars = ('a'..'z').to_a + ('A'..'Z').to_a
+        rand_str = (0...name_length).collect { chars[Kernel.rand(chars.length)] }.join
+        @name = 'polyline_'+rand_str
+
       end
       #Creates a new polyline.
       def create
-        a = "new GPolyline(#{MappingObject.javascriptify_variable(points)}"
+        a = "new GPolyline("
+        if points.nil? or points[0].is_a?(String)
+          a << "[]"
+        else
+          a << MappingObject.javascriptify_variable(points)
+        end
         a << ",#{MappingObject.javascriptify_variable(@color)}" if @color
         a << ",#{MappingObject.javascriptify_variable(@weight)}" if @weight
         a << ",#{MappingObject.javascriptify_variable(@opacity)}" if @opacity
-        a << ")"
+        a << ") "
+#        if points[0].is_a?(String)
+#          a = "addAddressesToPolyline(#{a},#{MappingObject.javascriptify_variable(points)}) "
+#        end
+#        a
       end
     end
 
@@ -306,7 +320,6 @@ module Ym4r
       end
 
       def create
-        puts @options.inspect
         "addMarkersToManager(new GMarkerManager(#{MappingObject.javascriptify_variable(@map)},#{MappingObject.javascriptify_variable(@options)}),#{MappingObject.javascriptify_variable(@managed_markers)})"
       end
 

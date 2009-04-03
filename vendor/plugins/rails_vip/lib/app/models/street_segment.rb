@@ -10,9 +10,12 @@ class StreetSegment < ActiveRecord::Base
 	def find_by_address(address, include_inactive = false)
 
 		street_num   = address[:street_num]
-		street_name  = address[:street].upcase
-		state        = address[:state].upcase
-		city         = address[:city].upcase
+		street_dir   = address[:street_dir]
+		street_suffix = address[:street_suffix]
+		street_name  = address[:street]
+		address_dir  = address[:address_dir]
+		state        = address[:state]
+		city         = address[:city]
 
 		even_odd = (street_num.to_i % 2 == 0) ? 'even' : 'odd'
 	
@@ -45,9 +48,16 @@ class StreetSegment < ActiveRecord::Base
 		                               JOIN street_addresses end
 		                               JOIN states s",
 		                    :conditions => ["start.std_street_name = ? AND end.std_street_name = ? AND
+						    ((start.street_direction = ? AND end.street_direction = ?) OR
+						     (start.street_direction IS NULL AND end.street_direction IS NULL)) AND
+						    ((start.street_suffix = ? AND end.street_suffix = ?) OR
+						     (start.street_suffix IS NULL AND end.street_suffix IS NULL)) AND
 
 						     (start.std_house_number <= ? OR start.std_house_number IS NULL) AND 
 						     (end.std_house_number >= ? OR end.std_house_number IS NULL) AND
+
+						    ((start.address_direction = ? AND end.address_direction = ?) OR
+						     (start.address_direction IS NULL AND end.address_direction IS NULL)) AND
 		                                     
 		                                     street_segments.odd_even_both IN (?, 'both') AND 
 			                             start.city = ? AND end.city = ? AND
@@ -57,7 +67,12 @@ class StreetSegment < ActiveRecord::Base
 		                                     street_segments.end_street_address_id  =end.id AND
 					             start.state_id=s.id",
 			                             street_name, street_name, 
+			                             street_dir, street_dir, 
+			                             street_suffix, street_suffix, 
+
 		                                     street_num, street_num, 
+		                                     address_dir, address_dir, 
+
 			                             even_odd, city, city, state]
 		)
 		
