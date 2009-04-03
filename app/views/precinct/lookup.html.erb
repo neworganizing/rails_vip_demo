@@ -5,8 +5,17 @@
 	<td><%= label_tag "street_num", "Street Number"%></td>
 	<td><%= text_field_tag "street_num", @params[:street_num], :size => "10"%></td>
 </tr><tr>
+	<td><%= label_tag "street_dir", "Street Direction"%></td>
+	<td><%= text_field_tag "street_dir", @params[:street_dir] %> (eg, N, E, S, W,...)</td>
+</tr><tr>
 	<td><%= label_tag "street", "Street Name"%></td>
 	<td><%= text_field_tag "street", @params[:street] %></td>
+</tr><tr>
+	<td><%= label_tag "street_suffix", "Street Suffix"%></td>
+	<td><%= text_field_tag "street_suffix", @params[:street_suffix] %> (eg, St, Ln,...)</td>
+</tr><tr>
+	<td><%= label_tag "address_dir", "Address Direction"%></td>
+	<td><%= text_field_tag "address_dir", @params[:address_dir] %> (eg, NE,SW,...)</td>
 </tr><tr>
 	<td><%= label_tag "city", "City"%></td>
 	<td><%= text_field_tag "city", @params[:city]  %></td>
@@ -104,21 +113,30 @@ Some known working examples:<br/>
 <tr><td>
 (from sample file)<br/>
 1118<br/>
+E<br/>
 Guinevere<br/>
+Dr<br/>
+SE<br/>
 Annandale<br/>
 OH
 </td>
 <td>
 (from real IA file)<br/>
 7<br/>
+E<br/>
 Bell<br/>
+Ave<br/>
+<br/>
 Des Moines<br/>
 IA<br/>
 </td>
 <td>
 (real MN file)<br/>
 32005<br/>
+<br/>
 Loon<br/>
+<br/>
+<br/>
 Vergas<br/>
 MN<br/>
 </td>

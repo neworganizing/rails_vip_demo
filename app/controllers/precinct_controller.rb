@@ -69,10 +69,13 @@ class PrecinctController < ApplicationController
 	def lookup
 		#set defaults
 		@params ||= params
-		@params[:street_num] ||= ''
-		@params[:street]     ||= ''
-		@params[:city]       ||= ''
-		@params[:state]      ||= ''
+		@params[:street_num]    ||= ''
+		@params[:street_dir]    ||= ''
+		@params[:street]        ||= ''
+		@params[:street_suffix] ||= ''
+		@params[:address_dir]    ||= ''
+		@params[:city]          ||= ''
+		@params[:state]         ||= ''
 		@STATES = [['','']]+STATES
 
 		if request.post?
@@ -98,14 +101,12 @@ class PrecinctController < ApplicationController
 			icon_home = Variable.new("icon_home")
 
 
-#			data = params[:form_data]
-			data = Hash.new
-			data[:street_num] = params[:street_num]
-			data[:street] = params[:street]
-			data[:city] = params[:city]
-			data[:state] = params[:state]
+			data = params
 			input_address = data[:street_num] + " " +
+					data[:street_dir] + " " +
 			                data[:street] + ", " +
+					data[:street_suffix] + " " +
+					data[:address_dir] + " " +
 			                data[:city] + ", " +
 			                data[:state]
 			#standardize address
@@ -220,6 +221,8 @@ class PrecinctController < ApplicationController
 										
 						@map.overlay_init(GPolyline.new([GLatLng.new([loc_start.latitude, loc_start.longitude]),
 						                                 GLatLng.new([loc_end.latitude,   loc_end.longitude])]))
+						# client-side geocoding
+#						@map.overlay_init(GPolyline.new([seg_addr_start, seg_addr_end]))
 					rescue
 						#couldn't find one of the addresses
 					end	
