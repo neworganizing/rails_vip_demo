@@ -1,9 +1,8 @@
 
-<table>
-<tr><th>id</th><th>odd/<br/>even</th><th>start</th><th>end</th><th>precinct</th><th>split</th></tr>
+<table style="border-collapse:collapse;">
+<tr><th>odd/<br/>even</th><th>start</th><th>end</th><th>precinct</th><th>split</th></tr>
 <% @street_segments.each do |ss| -%>
-<tr>
-<td><%=h ss.id %></td>
+<tr style="background-color: <%= cycle("#DDDDDD","none")%>; ">
 <td><%=h ss.odd_even_both %></td>
 <td><%= (ss.start_street_address.house_number.nil? ? '' : ss.start_street_address.house_number + " ") + \
 	(ss.start_street_address.street_direction.nil? ? '' : ss.start_street_address.street_direction + " ") + \

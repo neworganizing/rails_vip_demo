@@ -1,10 +1,12 @@
 table.maptable { 
   border: 1px solid black;
   border-collapse: collapse;
+  background-color:#f5f5f5;
 }
 
 table.maptable td {
   border: 2px solid #bbbbbb; 
+  vertical-align:top;
 }
 
 label {

@@ -1,0 +1,17 @@
+<table>
+<tr><td>split name</td><td><%=h @precinct_split.name %></td></tr>
+<tr><td>precinct name</td><td><%=h @precinct.name %></td></tr>
+<tr><td>locality</td><td><%= link_to @precinct.locality.name, @precinct.locality %></td></tr>
+<tr><td>ward</td><td><%=h @precinct.ward %></td></tr>
+<tr><td>mail only?</td><td><%=h @precinct.mail_only %></td></tr>
+<% @precinct_split.polling_locations.each do |pl| %>
+<tr><td>polling location</td><td><%= link_to pl.name, pl%></td></tr>
+<% end %>
+<% @precinct_split.ballot_drop_locations.each do |bdl| %>
+<tr><td>ballot drop location</td><td><%= link_to bdl.name, bdl%></td></tr>
+<% end %>
+<% if @precinct_split.street_segments.size > 0 %>
+<tr><td><%= link_to "Street Segments", :controller => "street_segment", :precinct_split => @precinct_split.id %></td><td><td></tr>
+<% end %>
+</table>
+

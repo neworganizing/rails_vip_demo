@@ -10,7 +10,7 @@
 <tr><td>ballot drop location</td><td><%= link_to bdl.name, bdl%></td></tr>
 <% end %>
 <% @precinct.precinct_splits.each do |ps| %>
-<tr><td>split</td><td><%=h ps.name%></td></tr>
+<tr><td>split</td><td><%= link_to ps.name, ps%></td></tr>
 <% end %>
 <% if @precinct.street_segments.size > 0 %>
 <tr><td><%= link_to "Street Segments", :controller => "street_segment", :precinct => @precinct.id %></td><td><td></tr>

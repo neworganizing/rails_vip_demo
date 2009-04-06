@@ -2,7 +2,7 @@
 <table>
 <tr><th>name</th><th></th></tr>
 <% @sources.each do |s| %>
-<tr>
+<tr style="background-color: <%= cycle("#DDDDDD","none")%>; ">
   <td><%= link_to s.name, s %></td>
   <td><%= link_to "Localities", :controller => "locality", :source => s.id %></td>
 </tr>

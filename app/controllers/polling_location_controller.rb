@@ -5,22 +5,27 @@ class PollingLocationController < ApplicationController
 		require 'google_geocode'
 		@title = "Polling Location"
 		@polling_location = PollingLocation.find(params[:id])
-		gg = GoogleGeocode.new "ABQIAAAAu7Re6QJVDQ3U5Sp2u2w3UhSwMyR9mQOTO__cwzDlnGLWnDHQaxQofqAx35lKdPCM1ODtbttHZKOR3Q"	
+		gg = GoogleGeocode.new "ABQIAAAAu7Re6QJVDQ3U5Sp2u2w3UhSwMyR9mQOTO__cwzDlnGLWnDHQaxQofqAx35lKdPCM1ODtbttHZKOR3Q"
 
 		address_versions = []
 		address_versions.push @polling_location.address
-		if @polling_location.precincts.first.street_segments.size > 0
+		
+		sample_location = @polling_location.precincts.first
+		sample_location = @polling_location.precinct_splits.first if sample_location.nil?
+		if sample_location and sample_location.street_segments.size > 0
 			address_versions.push @polling_location.name    + ', ' + \
 			                      @polling_location.address + ', ' + \
-			                      @polling_location.precincts.first.street_segments.first.start_street_address.city + ', ' + \
-			                      @polling_location.precincts.first.locality.state.name 
+			                      sample_location.street_segments.first.start_street_address.city + ', ' + \
+			                      sample_location.locality.state.name 
+
 			address_versions.push @polling_location.name    + ', ' + \
 			                      @polling_location.address + ', ' + \
-			                      @polling_location.precincts.first.street_segments.first.start_street_address.city + ', ' +
-			                      @polling_location.precincts.first.locality.state.name
+			                      sample_location.street_segments.first.start_street_address.city + ', ' + \
+			                      sample_location.locality.state.name 
+
 			address_versions.push @polling_location.address + ', ' + \
-			                      @polling_location.precincts.first.street_segments.first.start_street_address.city + ', ' +
-			                      @polling_location.precincts.first.locality.state.name 
+			                      sample_location.street_segments.first.start_street_address.city + ', ' + \
+			                      sample_location.locality.state.name 
 		end	
 		@polling_loc_std = nil
 
@@ -55,9 +60,9 @@ class PollingLocationController < ApplicationController
 				    ))
 		end
 		add_crumb "Source", @polling_location.source
-		add_crumb "State", @polling_location.precincts.first.locality.state
-		add_crumb "Locality", @polling_location.precincts.first.locality
-		#TODO: add precinct crumb if possible
+		add_crumb "State", @polling_location.precincts.first.locality.state if @polling_location.precincts.size > 0
+		add_crumb "Locality", @polling_location.precincts.first.locality if @polling_location.precincts.size > 0
+		#TODO: add precinct and split crumb if possible
 		add_crumb "Polling Location"
 	end
 

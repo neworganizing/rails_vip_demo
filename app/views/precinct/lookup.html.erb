@@ -107,8 +107,8 @@
 <% end %>
 <% end %>
 
-<div style="clear:both">
-Some known working examples:<br/>
+<div style="clear:both; position:relative; valign:top; margin-top:20px;">
+<br/><b>Some known working examples:</b><br/>
 <table class="maptable">
 <tr><td>
 (from sample file)<br/>
@@ -132,13 +132,22 @@ IA<br/>
 </td>
 <td>
 (real MN file)<br/>
-32005<br/>
+4741<br/>
 <br/>
-Loon<br/>
-<br/>
-<br/>
-Vergas<br/>
+4th<br/>
+Ave<br/>
+S<br/>
+Duluth<br/>
 MN<br/>
+</td>
+<td>
+
+<% if @valid_states  %>
+  Valid states for lookup:<br/>
+  <% @valid_states.each do |st| %>
+    <%= st.name %></br>
+  <% end %>
+<% end %>
 </td>
 </tr>
 </table>

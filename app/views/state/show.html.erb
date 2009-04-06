@@ -4,7 +4,12 @@
 </table>
 <table>
 <b>Localities</b>
+<tr>
 <% @state.localities.each do |l| %>
-	<tr><td><%= link_to l.name, l %></td></tr>
+  <td>
+            <%= link_to l.name, l %>
+  </td>
+  <%= cycle("","","","</tr><tr>") %>
 <% end %>
+</tr>
 </table>

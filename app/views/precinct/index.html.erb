@@ -1,7 +1,7 @@
 <table>
 <tr><th>locality</th><th>name</th></tr>
 <% @precincts.each do |p| -%>
-<tr>
+<tr style="background-color: <%= cycle("#DDDDDD","none")%>; ">
 <td><%= link_to p.locality.name, p.locality %></td>
 <td><%= link_to p.name, :controller => "precinct", :action => "show", :id => p.id %></td></tr>
 <% end -%>

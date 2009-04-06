@@ -78,6 +78,10 @@ class PrecinctController < ApplicationController
 		@params[:state]         ||= ''
 		@STATES = [['','']]+STATES
 
+		valid_sources = Source.find(:all, :joins => :street_segments,
+		                             :conditions => "active=1", :group => :id)
+		@valid_states = valid_sources.collect {|s| s.states}.flatten
+
 		if request.post?
 #			puts "got request"
 
@@ -231,7 +235,7 @@ class PrecinctController < ApplicationController
 						@map.record_init("#{line.name} = #{MappingObject.javascriptify_variable(line)};")
 						@map.record_init("map.addOverlay(#{line.name});")
 						for address in [seg_addr_start,seg_addr_end] do
-							@map.record_init("setTimeout('new GClientGeocoder().getLatLng(#{MappingObject.javascriptify_variable(address)}, function(latlng){ if (latlng) { #{line.name}.insertVertex(0,latlng); #{line.name}.redraw;}})',#{google_timeout*250})")
+							@map.record_init("setTimeout('new GClientGeocoder().getLatLng(#{MappingObject.javascriptify_variable(address)}, function(latlng){ if (latlng) { #{line.name}.insertVertex(0,latlng); #{line.name}.redraw;}})',#{google_timeout*500})")
 							google_timeout = google_timeout + 1;
 						end
 =begin
