@@ -42,4 +42,56 @@ body {
   font-family: 'arial', 'helvetica';
   background-color: #a6c743;
   overflow-y: scroll;
+  text-align:center;
+}
+
+.left {
+  width:120px; 
+  background-color:#eee; 
+  border:3px solid black; 
+  clear:none;
+  position:absolute;
+  padding:2px;
+  text-align:left;
+}
+
+
+#left_top_box {
+
+}
+
+#left_bottom_box {
+  top:140px;
+}
+
+.middle {
+  width:600px; 
+  margin-bottom:5px; 
+  clear:none; 
+  margin-left:auto; 
+  margin-right:auto; 
+}
+#head1 {
+  background-color:#680; 
+  font-size:4px; 
+  height:20px; 
+}
+
+#head2 {
+  background-color:#8A2; 
+  font-size:4px; 
+  height:10px; 
+}
+
+#container {
+/*style="width:580px; align:center; background-color:#eee; margin-top:5px; margin-left:auto; margin-right:auto; padding:10px; text-align:left;">*/
+  background-color:#eee;
+  margin-top:5px;
+  padding:10px;
+  width:580px;
+}
+
+#foot1 {
+  background-color:#8a2;
+  height:10px;
 }

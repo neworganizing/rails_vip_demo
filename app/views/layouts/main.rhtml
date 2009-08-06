@@ -5,13 +5,13 @@
 <link rel="shortcut icon" href="/favicon.gif" />
 </head>
 <body>
-<div style="width:120px; background-color:#eee; padding:2px; border:3px solid black; clear:none; position:absolute;">
+<div id="left_top_box" class="left">
   <%= link_to "Lookup", :controller => "precinct", :action => "lookup"%><br/>
   <%= link_to "Sources", :controller => "source" %><br/><br/>
   <font size="-2">Note: Data is from the November 2008 election.  It should not be used for upcoming elections.</font>
 </div>
 
-<div style="width:120px; top:140px; background-color:#eee; padding:2px; border:3px solid black; clear:none; position:absolute;">
+<div id="left_bottom_box" class="left">
 <div><b>Powered by:</b><br/> 
 <a style="border: 0px" href="http://neworganizing.com"><img style="margin-right:10px; border: 0px; height:30px;" alt="NOI" src="/images/noi_transp.png"></a>
 </div>
@@ -19,22 +19,26 @@
 <div style="margin-top:15px;">
 <b>Data from:</b><br/>
  <a href="http://www.votinginformationproject.org"><img style="border:0px; margin-right:10px;" alt="Voting Information Project" src="/images/vip_logo.png"/></a> 
+<div style="margin-top:15px;">
+<b>Source Code:</b><br/>
+<a href="http://github.com/neworganizing"><img src="http://github.com/images/modules/header/logov3.png" style="border:0px; width:75px;"></a>
+</td>
+</div>
+
 </div>
 <div style="margin-top:15px;">
 <b>Contact:</b><br/>
-<a href="mailto:matt@neworganizing.com">Webmaster</a>
+<a href="mailto:ethan@neworganizing.com">Webmaster</a>
 </td>
 </div>
+
 </div>
 
-<div style="width:600px; height:10px; margin-bottom:5px; font-size:4px; clear:none; background-color:#680; margin-left:auto; margin-right:auto; ">&nbsp;
-</div>
+<div id="head1" class="middle">&nbsp;</div>
+<div id="head2" class="middle">&nbsp;</div>
 
-<div style="width:600px; height:20px; margin-bottom:5px; clear:none; background-color:#8a2; margin-left:auto; margin-right:auto; ">&nbsp;
-</div>
-
-<div style="width:580px; align:center; background-color:#eee; margin-top:5px; margin-left:auto; margin-right:auto; padding:10px;">
-  <div id="breadcrumb">
+<div id="container" class="middle" >
+  <div id="breadcrumb" style="text-align:left;">
     <%= render_crumbs %>
   </div>
   <div id="maincontent">
@@ -42,7 +46,7 @@
   </div>
 </div>
 
-<div style="width:600px; height:10px; margin-top:5px; margin-bottom:5px; font-size:4px; clear:none; background-color:#8a2; margin-left:auto; margin-right:auto; ">&nbsp;
+<div id="foot1" class="middle">&nbsp;</div>
 
 
 </body>
